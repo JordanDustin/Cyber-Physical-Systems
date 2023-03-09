@@ -1,0 +1,138 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       VEX                                                       */
+/*    Created:      Tue Mar 16 2021                                           */
+/*    Description:  Arm Display Position                                      */
+/*                                                                            */
+/*    This example will continuously display the current                      */
+/*    position of the arm on the brain's screen                               */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// RoboticArm1          RoboticArm    1, 2, 3, 4, 1, 2, 3, 4
+// EStop                bumper        E              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+
+#include "vex.h"
+
+
+using namespace vex;
+
+
+int displayPositionLoop() {
+
+
+ Brain.Screen.setFont(mono60);
+  while (true) {
+   Brain.Screen.clearScreen();
+
+
+   // Display the X position on row 1
+   Brain.Screen.setCursor(1, 1);
+   Brain.Screen.print("X: %.3f", RoboticArm1.getAxisPosition(xaxis));
+
+
+   // Display the Y position on row 2
+   Brain.Screen.newLine();
+   Brain.Screen.print("Y: %.3f", RoboticArm1.getAxisPosition(yaxis));
+
+
+   // Display the Z position on row 3
+   Brain.Screen.newLine();
+   Brain.Screen.print("Z: %.3f", RoboticArm1.getAxisPosition(zaxis));
+
+
+   wait(0.2, seconds);
+ }
+ return 0;
+}
+
+
+// This is the function we want to run when the emergency stop button
+// is pressed. It will tell the arm to stop moving.
+void onEStopPressed() {
+ RoboticArm1.emergencyStop();
+}
+
+
+int main() {
+ // Initializing Robot Configuration. DO NOT REMOVE!
+ vexcodeInit();
+  // Link the emergency stop button pressed event with the onEStopPressed function
+ EStop.pressed(onEStopPressed);
+
+
+ // Start task to continuously display the current arm position
+ vex::task displayPositionTask(displayPositionLoop);
+
+
+ // Set up the arm with the initial configuration values
+ //Left Triangle
+ RoboticArm1.setMasteringValues(1761,2089,1884,410);
+ RoboticArm1.setToolTipOffset(0.0, 0.0, 0.0);
+ RoboticArm1.moveToPositionLinear(3+2, -4, 4);
+
+
+ RoboticArm1.moveToPositionLinear(3+2, -4, 2.8);
+ RoboticArm1.moveToPositionLinear(5+2, -3, 2.8);
+ RoboticArm1.moveToPositionLinear(3+2, -2, 2.8);
+ //V
+  RoboticArm1.moveToPositionLinear(3+2, 0-1, 2.8);
+ RoboticArm1.moveToPositionLinear(3+2, -1-1, 2.8);
+ RoboticArm1.moveToPositionLinear(4+2, -1-1, 2.8);
+ RoboticArm1.moveToPositionLinear(4+2, 0-1, 2.8);
+ RoboticArm1.moveToPositionLinear(4+2, -1-1, 2.8);
+ RoboticArm1.moveToPositionLinear(5+2, -1-1, 2.8);
+ RoboticArm1.moveToPositionLinear(5+2, 0-1, 2.8);
+ //E
+ RoboticArm1.moveToPositionLinear(5+2, 2-1, 3.8);
+
+
+ RoboticArm1.moveToPositionLinear(5+2, 2-1, 2.8);
+ RoboticArm1.moveToPositionLinear(3+2, -1, 2.8);
+ RoboticArm1.moveToPositionLinear(5+2, -1-1, 2.8+1);
+ RoboticArm1.moveToPositionLinear(3+2, 2-1, 2.8);
+
+
+// RoboticArm1.moveToPositionLinear(3, -2, 4);
+ /*RoboticArm1.moveToPositionLinear(3, -2, 3);
+ RoboticArm1.moveToPositionLinear(6, -4, 2.4);
+ RoboticArm1.moveToPositionLinear(6, -1, 2.4);
+ RoboticArm1.moveToPositionLinear(3, -2, 2.8);
+
+
+ RoboticArm1.moveToPositionLinear(3, -2, 4);
+
+
+ RoboticArm1.moveToPositionLinear(3+3, -3, 3);
+ RoboticArm1.moveToPositionLinear(6+3, -5, 2.4);
+ RoboticArm1.moveToPositionLinear(6+3, -2, 2.4);
+ RoboticArm1.moveToPositionLinear(3+3, -3, 2.8);
+
+
+ RoboticArm1.moveToPositionLinear(3+3, -3, 4);
+
+
+ //RoboticArm1.moveToPositionLinear(1, 3, 4);
+ //RoboticArm1.moveToPositionLinear(1, 3, 2.4);
+*/
+
+
+ /*RoboticArm1.moveToPositionLinear(3, 4, 4);
+ RoboticArm1.moveToPositionLinear(6, 2, 2.6);
+ RoboticArm1.moveToPositionLinear(6, 5, 2.4);
+ RoboticArm1.moveToPositionLinear(3, 4, 2.4);*/
+
+
+ /*RoboticArm1.moveToPositionLinear(7, -3, 3.);
+ RoboticArm1.moveToPositionLinear(7, -3, 3.);*/
+}
+
+
+
